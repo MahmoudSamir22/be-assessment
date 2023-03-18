@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   password: {
     type: String,
@@ -21,7 +21,9 @@ const userSchema = new mongoose.Schema({
   },
   verifyCode: {
     type: String,
-    expires: 10 * 60,
+  },
+  verifyCodeExpiration: {
+    type: Date,
   },
 });
 
