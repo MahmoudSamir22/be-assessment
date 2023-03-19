@@ -24,16 +24,16 @@ const checkSchema = new mongoose.Schema({
     type: String,
   },
   timeout: {
-    type: String,
+    type: Number,
     default: 5,
   },
   interval: {
-    type: String,
+    type: Number,
     default: 10,
   },
   threshold: {
-    type: String,
-    default: 1
+    type: Number,
+    default: 1,
   },
   authentication: {
     username: {
@@ -43,22 +43,31 @@ const checkSchema = new mongoose.Schema({
       type: String,
     },
   },
-  httpHeaders: [{
-    type: String,
-  }],
-  assert: { statusCode: {
-
-  } },
-  tags: [{
-    type: String,
-  }],
+  httpHeaders: [
+    {
+      key: {
+        type: String,
+      },
+      value: {
+        type: String,
+      },
+    },
+  ],
+  assert: {
+    statusCode: { type: Number },
+  },
+  tags: [
+    {
+      type: String,
+    },
+  ],
   ignoreSSL: {
-    type: String,
+    type: Boolean,
   },
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User'
-  }
+    ref: "User",
+  },
 });
 
 const Check = mongoose.model("Check", checkSchema);
