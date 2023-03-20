@@ -1,19 +1,45 @@
 const axios = require("axios");
 const Check = require("../models/checkModel");
+const Report = require("../models/reportModel");
 
-const checkUrl = (urlOptions) => {
+const checkUrl = async (check) => {
+  let report = await Report.findOne({ request: check._id });
+  if (!report) {
+    report = await Report.create({ owner: check.user, request: check._id });
+  }
+  let startTime = new Date().getTime();
   axios
-    .get(urlOptions.url)
-    .then((response) => {
-      console.log(
-        `Successfully fetched data from ${urlOptions.url}:`,
-        response.data
-      );
+    .get(check.url)
+    .then(async (response) => {
+      // const startTime = response.config.metadata.startTime;
+      const endTime = new Date().getTime();
+      const responseTime = endTime - startTime;
+      await Report.findByIdAndUpdate(report._id, {
+        status: "up",
+        $push: {
+          history: {
+            timestamp: Date.now(),
+            status: "up",
+            responseTime: responseTime,
+          },
+        },
+      });
     })
-    .catch((error) => {
-      console.error(
-        `Error fetching data from ${urlOptions.url}: ${error.message}`
-      );
+    .catch(async (error) => {
+      // const startTime = response.config.metadata.startTime;
+      const endTime = new Date().getTime();
+      const responseTime = endTime - startTime;
+      await Report.findByIdAndUpdate(report._id, {
+        status: "down",
+        outages: report.outages + 1,
+        $push: {
+          history: {
+            timestamp: Date.now(),
+            status: "down",
+            responseTime: responseTime,
+          },
+        },
+      });
     });
 };
 
