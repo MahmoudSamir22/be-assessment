@@ -50,7 +50,7 @@ const monitorUrl = async () => {
     checkUrl(check);
     setInterval(() => {
       checkUrl(check);
-    }, check.interval * 1000 * 30);
+    }, check.interval * 1000 * 60);
   });
 };
 module.exports = monitorUrl;
