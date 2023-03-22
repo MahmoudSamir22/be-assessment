@@ -14,4 +14,8 @@ router.get('/2', (req, res) => {
 //     res.status(200).send({data: "Check 3"})
 // })
 
+router.get('/4', (req, res) => {
+    res.status(200).send({data: "Check 4"})
+})
+
 module.exports = router;

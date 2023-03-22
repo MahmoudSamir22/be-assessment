@@ -9,6 +9,12 @@ const {
 } = require("../controllers/checkController");
 
 const {
+  setOwnerFilter,
+  setIdFilter,
+  setTagsFilter,
+} = require("../controllers/utilsController");
+
+const {
   addCheckValidator,
   getSingleCheckValidator,
   deleteCheckValidator,
@@ -16,11 +22,22 @@ const {
 
 const auth = require("../middlewares/auth");
 
-router.route("/").post(auth, addCheckValidator, addCheck).get(auth, getChecks);
+router
+  .route("/")
+  .post(auth, addCheckValidator, addCheck)
+  .get(auth, setOwnerFilter, getChecks);
+
+router.get("/getByTags", auth, setOwnerFilter, setTagsFilter, getChecks);
 
 router
   .route("/:id")
-  .get(auth, getSingleCheckValidator, getSingleCheck)
+  .get(
+    auth,
+    getSingleCheckValidator,
+    setOwnerFilter,
+    setIdFilter,
+    getSingleCheck
+  )
   .put(auth, updateCheck)
   .delete(auth, deleteCheckValidator, deleteCheck);
 

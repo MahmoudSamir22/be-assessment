@@ -64,7 +64,7 @@ const checkSchema = new mongoose.Schema({
   ignoreSSL: {
     type: Boolean,
   },
-  user: {
+  owner: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
   },
