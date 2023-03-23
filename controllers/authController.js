@@ -8,6 +8,10 @@ const sendEmail = require("../utils/sendMail");
 const ApiError = require("../utils/apiError");
 const User = require("../models/userModel");
 
+
+// @desc Signup New Account 
+// @route POST /api/auth/signup
+// @access Public
 exports.signUp = asyncHandler(async (req, res, next) => {
   const excludedFields = ["isEmailVerified"];
   excludedFields.forEach((field) => {
@@ -25,7 +29,9 @@ exports.signUp = asyncHandler(async (req, res, next) => {
   await sendEmail(emailOptions);
   res.status(201).json(user);
 });
-
+// @desc Login And get token back 
+// @route POST /api/auth/login
+// @access Public
 exports.login = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user || !(await bcrypt.compare(req.body.password, user.password))) {
@@ -36,7 +42,9 @@ exports.login = asyncHandler(async (req, res, next) => {
   const token = generateToken(user._id);
   res.status(200).json({ data: user, token });
 });
-
+// @desc Set the account to verified account
+// @route PUT /api/auth/verifyEmail
+// @access Public
 exports.verifyEmail = asyncHandler(async (req, res, next) => {
   const hashedOTP = crypto
     .createHash(process.env.HASHING_METHOD)
@@ -56,7 +64,9 @@ exports.verifyEmail = asyncHandler(async (req, res, next) => {
   await user.save();
   res.status(200).json(user);
 });
-
+// @desc Resend The Verification code to email 
+// @route POST /api/auth/resendVerifyCode
+// @access Public
 exports.resendVerifyCode = asyncHandler(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) {

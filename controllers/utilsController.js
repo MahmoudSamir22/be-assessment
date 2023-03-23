@@ -3,6 +3,8 @@ const asyncHandler = require("express-async-handler");
 const ApiError = require("../utils/apiError");
 const ApiFeatures = require("../utils/apiFeatures");
 
+// @desc Get All documents
+// @route GET
 exports.getAll = (Model, modelName = "") =>
   asyncHandler(async (req, res, next) => {
     let filter = {};
@@ -20,7 +22,8 @@ exports.getAll = (Model, modelName = "") =>
     const documents = await mongooseQuery;
     res.status(200).json({ paginationResult, data: documents });
   });
-
+// @desc Get Single documents
+// @route GET
 exports.getOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     let filter = { _id: req.params.id };
@@ -33,7 +36,8 @@ exports.getOne = (Model) =>
     }
     res.status(200).json(document);
   });
-
+// @desc Delete Single Document
+// @route DELETE
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
     let filter = { _id: req.params.id };
@@ -46,7 +50,8 @@ exports.deleteOne = (Model) =>
     }
     res.status(204).json();
   });
-
+// @desc Set custom filter
+// @access Middleware
 exports.setOwnerFilter = asyncHandler((req, res, next) => {
   if (req.queryFilter) {
     const filter = { ...req.queryFilter, owner: req.user };
@@ -56,7 +61,8 @@ exports.setOwnerFilter = asyncHandler((req, res, next) => {
   }
   next();
 });
-
+// @desc Set custom filter
+// @access Middleware
 exports.setIdFilter = asyncHandler((req, res, next) => {
   if (req.queryFilter) {
     const filter = { ...req.queryFilter, _id: req.params.id };
@@ -66,7 +72,8 @@ exports.setIdFilter = asyncHandler((req, res, next) => {
   }
   next();
 });
-
+// @desc Set custom filter
+// @access Middleware
 exports.setTagsFilter = asyncHandler((req, res, next) => {
   if (req.queryFilter) {
     const filter = { ...req.queryFilter, tags: { $in: req.body.tag } };
