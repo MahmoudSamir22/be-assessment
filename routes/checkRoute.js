@@ -22,23 +22,19 @@ const {
 
 const auth = require("../middlewares/auth");
 
+router.use(auth);
+
 router
   .route("/")
-  .post(auth, addCheckValidator, addCheck)
-  .get(auth, setOwnerFilter, getChecks);
+  .post(addCheckValidator, addCheck)
+  .get(setOwnerFilter, getChecks);
 
-router.get("/getByTags", auth, setOwnerFilter, setTagsFilter, getChecks);
+router.get("/getByTags", setOwnerFilter, setTagsFilter, getChecks);
 
 router
   .route("/:id")
-  .get(
-    auth,
-    getSingleCheckValidator,
-    setOwnerFilter,
-    setIdFilter,
-    getSingleCheck
-  )
-  .put(auth, updateCheck)
-  .delete(auth, deleteCheckValidator, deleteCheck);
+  .get(getSingleCheckValidator, setOwnerFilter, setIdFilter, getSingleCheck)
+  .put(updateCheck)
+  .delete(deleteCheckValidator, deleteCheck);
 
 module.exports = router;

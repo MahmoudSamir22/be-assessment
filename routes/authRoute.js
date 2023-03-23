@@ -7,6 +7,9 @@ const {
   resendVerifyCode,
 } = require("../controllers/authController");
 
+const auth = require('../middlewares/auth')
+
+
 router.post("/signup", signUp);
 
 router.post("/login", login);

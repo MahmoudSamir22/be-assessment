@@ -48,7 +48,7 @@ exports.verifyEmail = asyncHandler(async (req, res, next) => {
     verifyCodeExpiration: { $gte: Date.now() },
   });
   if (!user) {
-    return next(new ApiError(`OTP is invalid or expired`));
+    return next(new ApiError(`OTP is invalid or expired`, 404));
   }
   user.isEmailVerified = true;
   user.verifyCode = undefined;
@@ -74,4 +74,3 @@ exports.resendVerifyCode = asyncHandler(async (req, res, next) => {
   await sendEmail(emailOptions);
   res.status(201).json(user);
 });
-

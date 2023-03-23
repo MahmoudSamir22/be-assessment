@@ -14,7 +14,7 @@ exports.deleteCheck = deleteOne(Check)
 exports.addCheck = asyncHandler(async (req, res, next) => {
   const check = await Check.create({
     ...req.body,
-    user: req.user,
+    owner: req.user,
   });
   checkUrl(check);
   setInterval(() => {

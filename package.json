@@ -4,8 +4,9 @@
   "description": "Build an uptime monitoring RESTful API server that allows authenticated users to monitor URLs, and get detailed uptime reports about their availability, average response time, and total uptime/downtime.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "start": "node ./src/server.js",
+    "dev": "nodemon ./src/server.js",
+    "test": "env-cmd -f ./test.env jest --watch"
   },
   "repository": {
     "type": "git",
@@ -30,5 +31,9 @@
     "mongoose": "^7.0.2",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0",
+    "supertest": "^6.3.3"
   }
 }

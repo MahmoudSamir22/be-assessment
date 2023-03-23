@@ -37,7 +37,7 @@ const checkUrl = async (check) => {
   // Find report or create if not exist
   let report = await Report.findOne({ request: check._id });
   if (!report) {
-    report = await Report.create({ owner: check.user, request: check._id });
+    report = await Report.create({ owner: check.owner, request: check._id });
   }
   // Setup Needed Vars
   let startTime = new Date().getTime(); // Help to count the request Response time
