@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "1b81ed1b-fe82-4bd7-bb9b-074dc1f2cdad",
+		"name": "BE Assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12652392"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"mahmoud\",\r\n    \"email\": \"menatosamir1@gmail.com\",\r\n    \"password\": \"pass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"JWT\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"test@gmail.com\",\r\n    \"password\": \"pass123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Email",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"menatosamir55@gmail.com\",\r\n    \"otp\": 574299\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/verifyEmail",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"verifyEmail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend Verify Code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"menatosamir55@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/auth/resendVerifyCode",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"resendVerifyCode"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Check",
+			"item": [
+				{
+					"name": "Add Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"4th Check\",\r\n    \"url\": \"http://localhost:3000/4\",\r\n    \"protocol\": \"HTTP\",\r\n    \"path\": \"/\",\r\n    \"port\": 3851,\r\n    \"webhook\": \"https://example.com/webhook\",\r\n    \"timeout\": 5,\r\n    \"interval\": 2,\r\n    \"threshold\": 1,\r\n    \"authentication\": {\r\n      \"username\": \"username\",\r\n      \"password\": \"password\"\r\n    },\r\n    \"httpHeaders\": [\r\n      {\"key\": \"Accept-Language\", \"value\": \"en-US,en;q=0.9\"},\r\n      {\"key\": \"User-Agent\", \"value\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36\"}\r\n    ],\r\n    \"assert\": {\r\n      \"statusCode\": 200\r\n    },\r\n    \"tags\": [\"search engine\", \"popular\"],\r\n    \"ignoreSSL\": false\r\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/check/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Checks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/check/?page=1&limit=20&keyword=1st&sort=timeout&port[gte]=3000&fields=name url port",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "keyword",
+									"value": "1st"
+								},
+								{
+									"key": "sort",
+									"value": "timeout"
+								},
+								{
+									"key": "port[gte]",
+									"value": "3000"
+								},
+								{
+									"key": "fields",
+									"value": "name url port"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/check/64177dfc14fb0cecf19b0e91",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								"64177dfc14fb0cecf19b0e91"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"3rd Check\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/check/64170c493ec83f6174f6571f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								"64170c493ec83f6174f6571f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Check",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/check/64170c493ec83f6174f6571f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								"64170c493ec83f6174f6571f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Tags",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tag\": \"popular\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/check//getByTags",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"check",
+								"",
+								"getByTags"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Get Reports",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/report",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"report"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Single Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/report/641a372ce95b591f875f6a47",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"641a372ce95b591f875f6a47"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Report",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{JWT}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/report/641a372ce95b591f875f6a47",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"report",
+								"641a372ce95b591f875f6a47"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
