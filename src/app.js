@@ -6,7 +6,6 @@ const dbConnection = require('../db/dbConnection')
 const globalError = require('../middlewares/errorMiddleware')
 const mountRoutes = require('../routes')
 const ApiError = require('../utils/apiError')
-const {monitorUrl} = require('../utils/monitor')
 
 
 dbConnection();
